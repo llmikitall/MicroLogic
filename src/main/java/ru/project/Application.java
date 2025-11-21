@@ -1,54 +1,37 @@
 package ru.project;
 
-import com.jme3.app.FlyCamAppState;
-import com.jme3.app.SimpleApplication;
-import com.jme3.app.StatsAppState;
-import com.jme3.light.DirectionalLight;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
-import com.jme3.math.FastMath;
-import com.jme3.math.Vector3f;
-import com.jme3.scene.Spatial;
-import com.jme3.system.AppSettings;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import ru.project.GUI.GAndElement;
+import ru.project.GUI.WorkspacePane;
 
-public class Application extends SimpleApplication {
+public class Application extends javafx.application.Application {
+    public static void getLaunch(){
+        launch();
+    }
 
     @Override
-    public void simpleInitApp(){
+    public void start(Stage primaryStage) throws Exception {
 
-        Spatial model = assetManager.loadModel("/Models/logic.obj");
-        Material material = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        material.setColor("Color", ColorRGBA.White);
-        model.setMaterial(material);
-        model.setLocalScale(0.1f);
-        model.rotate(0, 0, FastMath.DEG_TO_RAD * 90);
-        rootNode.attachChild(model);
+        BorderPane root = new BorderPane();
+        WorkspacePane workspacePane = new WorkspacePane();
+        root.setCenter(workspacePane);
 
-        /*
-        DirectionalLight sun = new DirectionalLight();
-        sun.setDirection(new Vector3f(-1, -2, -3).normalizeLocal());
-        rootNode.addLight(sun);
+        Scene scene = new Scene(root, 800, 600);
+        primaryStage.setTitle("MicroLogic");
+        primaryStage.setScene(scene);
 
+        primaryStage.show();
 
-         */
+        test(workspacePane);
     }
 
-    public Application(){
-        super(new FlyCamAppState(), new StatsAppState());
+    public void test(WorkspacePane workspacePane){
+        GAndElement and1 = new GAndElement(50, 50);
+        GAndElement and2 = new GAndElement(100, 100);
+        GAndElement and3 = new GAndElement(50, 50);
+        GAndElement and4 = new GAndElement(100, 100);
+        workspacePane.getChildren().addAll(and1, and2, and3, and4);
     }
-
-    public static void main(String[] args){
-        Application application = new Application();
-
-        AppSettings settings = new AppSettings(true);
-        settings.setWidth(1280);
-        settings.setHeight(720);
-        settings.setTitle("MicroLogic");
-
-
-        application.setSettings(settings);
-        application.start();
-    }
-
-
 }
