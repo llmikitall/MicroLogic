@@ -55,8 +55,8 @@ public class GElement extends Group {
         double deltaX = mouseEvent.getSceneX() - dragStartX;
         double deltaY = mouseEvent.getSceneY() - dragStartY;
 
-        this.setLayoutX(elementStartX + deltaX);
-        this.setLayoutY(elementStartY + deltaY);
+        this.setLayoutX(((mouseEvent.getSceneX()>=0) ? elementStartX + deltaX : 0));
+        this.setLayoutY(((mouseEvent.getSceneY()>=0) ? elementStartY + deltaY : 0));
 
         updateConnectedWires();
     }
@@ -72,9 +72,9 @@ public class GElement extends Group {
 
     protected void snapToGrid(){
         int gridSize = 15;
-        double x = Math.round(this.getLayoutX()/gridSize) * gridSize;
-        double y = Math.round(this.getLayoutY()/gridSize) * gridSize;
-
+        double x = Math.round(((this.getLayoutX()>=0) ? this.getLayoutX() : 0)/gridSize) * gridSize;
+        double y = Math.round(((this.getLayoutY()>=0) ? this.getLayoutY() : 0)/gridSize) * gridSize;
+        System.out.println(x + " " + y);
         this.setLayoutX(x);
         this.setLayoutY(y);
     }

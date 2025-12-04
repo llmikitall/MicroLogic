@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import ru.project.GUI.GAndElement;
+import ru.project.GUI.ToolbarPane;
 import ru.project.GUI.WorkspacePane;
 
 public class Application extends javafx.application.Application {
@@ -16,7 +17,10 @@ public class Application extends javafx.application.Application {
 
         BorderPane root = new BorderPane();
         WorkspacePane workspacePane = new WorkspacePane();
+        ToolbarPane toolbarPane = new ToolbarPane(workspacePane);
+        root.setTop(toolbarPane);
         root.setCenter(workspacePane);
+
 
         Scene scene = new Scene(root, 800, 600);
         primaryStage.setTitle("MicroLogic");
