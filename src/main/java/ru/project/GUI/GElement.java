@@ -1,23 +1,63 @@
 package ru.project.GUI;
 
+import javafx.event.Event;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
+import ru.project.Application;
 import ru.project.Core.LogElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GElement extends Group {
     private LogElement logElement;
-    private List<LogElement> inputs;
-    private LogElement output;
+    private List<Connector> inputs = new ArrayList<>();
+    private List<Connector> outputs = new ArrayList<>();
 
     private boolean isDraggable = true;
     private double dragStartX, dragStartY;
     private double elementStartX, elementStartY;
 
     public GElement(){
-
         setupDragHandlers();
+    }
+
+
+
+
+    protected void setupConnectorHandlers(WireManager wireManager){
+
+        for(Connector output : outputs){
+            output.setOnMousePressed(event -> {
+                if(!output.isConnected()){
+                    wireManager.startWireCreation(output);
+                    event.consume();
+                }
+            });
+
+            output.setOnMouseDragged(event -> {
+                if(wireManager.isCreatingWire()){
+                    wireManager.updateTempWire(event.getSceneX(), event.getSceneY());
+                    event.consume();
+                }
+            });
+        }
+
+        for(Connector input : inputs){
+            input.setOnMousePressed(event -> {
+                if(!input.isConnected()){
+                    wireManager.startWireCreation(input);
+                    event.consume();
+                }
+            });
+
+            input.setOnMouseDragged(event -> {
+                if(wireManager.isCreatingWire()){
+                    wireManager.updateTempWire(event.getSceneX(), event.getSceneY());
+                    event.consume();
+                }
+            });
+        }
     }
 
     private void setupDragHandlers(){
@@ -37,7 +77,6 @@ public class GElement extends Group {
         this.setOnMouseReleased(event -> {
             if(isDraggable){
                 endDrag(event);
-                event.consume();
             }
         });
     }
@@ -64,10 +103,20 @@ public class GElement extends Group {
     private void endDrag(MouseEvent mouseEvent){
         this.setOpacity(1.0);
         snapToGrid();
+
+        updateConnectedWires();
+
     }
 
     protected void updateConnectedWires(){
-        //Обновление проводов
+        for(Connector output: outputs){
+            if(output.getWire() != null)
+                output.getWire().updatePosition();
+        }
+        for(Connector input: inputs){
+            if(input.getWire() != null)
+                input.getWire().updatePosition();
+        }
     }
 
     protected void snapToGrid(){
@@ -82,9 +131,22 @@ public class GElement extends Group {
     public void setDraggable(boolean isDraggable){
         this.isDraggable = isDraggable;
     }
-
     public boolean getDraggable(){
         return isDraggable;
+    }
+    public List<Connector> getInputs(){
+        return inputs;
+    }
+    public List<Connector> getOutputs(){
+        return outputs;
+    }
+
+    public void setLogElement (LogElement logElement){
+        this.logElement = logElement;
+    }
+
+    public LogElement getLogElement(){
+        return logElement;
     }
 
 }

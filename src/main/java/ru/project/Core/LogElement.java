@@ -9,5 +9,6 @@ public interface LogElement {
     void setInputIndex(LogElement input);
     void setOutput(LogElement output);
     LogElement getOutput();
+    boolean isState();
     boolean simulation();
 }

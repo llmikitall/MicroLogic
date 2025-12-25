@@ -1,59 +1,41 @@
 package ru.project.GUI;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import ru.project.Core.LAnd;
+import ru.project.Core.LStart;
 
-public class GAndElement extends GElement {
+public class GBeginElement extends GElement{
     private Rectangle body;
     private Text text;
 
-    public GAndElement(WireManager wireManager){
+    public GBeginElement(WireManager wireManager){
         super();
         createVisual();
-
-        createConnectors();
         setupConnectorHandlers(wireManager);
     }
 
-    public GAndElement(double x, double y, WireManager wireManager){
+    public GBeginElement(double x, double y, WireManager wireManager){
         super();
         createVisual();
-
-        createConnectors();
+        setLogElement(new LStart());
         setupConnectorHandlers(wireManager);
-
-        setLogElement(new LAnd());
 
         setPosition(x, y);
     }
 
-    protected void createConnectors(){
-
-    }
-
     private void createVisual(){
-
 
         body = new Rectangle(50, 30);
         body.setStroke(Color.WHITE);
 
-
-        text = new Text(15, 20, "AND");
-        text.setStroke(Color.WHITE);
-
-        Connector input1 = new Connector(this, true, 0, 0, 10);
-        Connector input2 = new Connector(this, true, 1, 0, 20);
         Connector output = new Connector(this, false, 0, 50, 15);
-
-        this.getInputs().add(input1);
-        this.getInputs().add(input2);
-
         this.getOutputs().add(output);
 
-        this.getChildren().addAll(body, input1, input2, output, text);
+        text = new Text(15, 20, "Start");
+        text.setStroke(Color.WHITE);
+
+        this.getChildren().addAll(body, output, text);
     }
 
 
@@ -61,6 +43,5 @@ public class GAndElement extends GElement {
         this.setLayoutX(x);
         this.setLayoutY(y);
     }
-
 
 }

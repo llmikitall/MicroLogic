@@ -3,7 +3,7 @@ package ru.project.Core;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LAnd implements LogElement{
+public class LEnd implements LogElement{
 
     /* input - список входов. В каждом элементе может быть от 0 до 2 входов. Пример:
 		- Лог. эл. AND - два входа.
@@ -46,21 +46,7 @@ public class LAnd implements LogElement{
     }
 
     public boolean simulation(){
-        if (input.isEmpty()) {
-            state = false;
-            return false;
-        }
-        if(input.size() == 1){
-            state = false;
-            return false;
-        }
-
-        state = true;
-
-        for (LogElement logElement : input)
-            state = state && (logElement.simulation());
-
-        return state;
+        return input.getFirst().simulation();
     }
 
     @Override
