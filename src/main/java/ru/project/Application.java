@@ -1,13 +1,13 @@
 package ru.project;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import ru.project.GUI.GAndElement;
-import ru.project.GUI.ToolbarPane;
-import ru.project.GUI.WorkspacePane;
+import ru.project.GUI.*;
 
 public class Application extends javafx.application.Application {
+
     public static void getLaunch(){
         launch();
     }
@@ -17,8 +17,10 @@ public class Application extends javafx.application.Application {
 
         BorderPane root = new BorderPane();
         WorkspacePane workspacePane = new WorkspacePane();
-        ToolbarPane toolbarPane = new ToolbarPane(workspacePane);
-        root.setTop(toolbarPane);
+
+
+
+
         root.setCenter(workspacePane);
 
 
@@ -32,10 +34,43 @@ public class Application extends javafx.application.Application {
     }
 
     public void test(WorkspacePane workspacePane){
-        GAndElement and1 = new GAndElement(50, 50);
-        GAndElement and2 = new GAndElement(100, 100);
-        GAndElement and3 = new GAndElement(50, 50);
-        GAndElement and4 = new GAndElement(100, 100);
-        workspacePane.getChildren().addAll(and1, and2, and3, and4);
+        WireManager wireManager = workspacePane.getWireManager();
+        ButtonStart button = new ButtonStart(workspacePane);
+        workspacePane.getChildren().add(button);
+
+        GAndElement and1 = new GAndElement(50, 50, wireManager);
+        workspacePane.addElement(and1);
+        GAndElement and2 = new GAndElement(100, 100, wireManager);
+        workspacePane.addElement(and2);
+        GAndElement and3 = new GAndElement(50, 50, wireManager);
+        workspacePane.addElement(and3);
+        GAndElement and4 = new GAndElement(100, 100, wireManager);
+        workspacePane.addElement(and4);
+
+        GEndElement end = new GEndElement(200, 200, wireManager);
+        workspacePane.addElement(end);
+        workspacePane.addEndElement(end);
+
+        GBeginElement begin1 = new GBeginElement(200, 200, wireManager);
+        workspacePane.addElement(begin1);
+
+        GBeginElement begin2 = new GBeginElement(200, 200, wireManager);
+        workspacePane.addElement(begin2);
+
+        GBeginElement begin3 = new GBeginElement(200, 200, wireManager);
+        workspacePane.addElement(begin3);
+
+        GBeginElement begin4 = new GBeginElement(200, 200, wireManager);
+        workspacePane.addElement(begin4);
+
+        GBeginElement begin5 = new GBeginElement(200, 200, wireManager);
+        workspacePane.addElement(begin5);
+
+        GBeginElement begin6 = new GBeginElement(200, 200, wireManager);
+        workspacePane.addElement(begin6);
+
+        workspacePane.getChildren().addAll(and1, and2, and3, and4, end, begin1, begin2, begin4, begin6, begin5, begin3);
+
+
     }
 }
