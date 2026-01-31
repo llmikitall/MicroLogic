@@ -23,6 +23,7 @@ public class Application extends javafx.application.Application {
 
         root.setCenter(workspacePane);
 
+
         Scene scene = new Scene(root, 800, 600);
         primaryStage.setTitle("MicroLogic");
         primaryStage.setScene(scene);

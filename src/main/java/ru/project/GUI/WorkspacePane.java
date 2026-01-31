@@ -29,6 +29,10 @@ public class WorkspacePane extends Pane {
 
 
     }
+    public void addElement(GElement element) {
+        elements.add(element);
+        this.getChildren().add(element);
+    }
 
     private void setupGlobalEventHandlers(){
 
